@@ -1,7 +1,7 @@
-Composer: There's a Module (or Library) for That!
+Composer: Share all the things!
 =================================================
 
-Presentation by [Rob Loach](http://robloach.net), [Larry Garfield](http://www.garfieldtech.com)] and [Sam Boyer](http://twitter.com/sdboyer).
+Presentation by [Larry Garfield](http://www.garfieldtech.com)]
 
 Build
 -----
