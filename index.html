@@ -122,8 +122,8 @@
           </section>
           <section fullscreen-img="assets/history.jpg" class="fullscreen">
             <h2>April 2011</h2>
-            <p>Nils Aderman (PHPBB): libzypp -> PHP</p>
-            <p class="fragment">Jordi Boggiano (Monolog): Packagist, less sucky front-end for PEAR</p>
+            <p class="fragment">Nils Aderman (PHPBB): libzypp -> PHP</p>
+            <p class="fragment">Jordi Boggiano (Monolog): Packagist, front-end for PEAR</p>
           </section>
           <section fullscreen-img="assets/history.jpg" class="fullscreen">
             <h2>With their powers combined...</h2>
@@ -221,24 +221,26 @@
           </section>
           <section fullscreen-img="assets/yes.jpg" class="fullscreen">
             <h2>Get Composer</h2>
-            <dl>
-              <dt>Quick 'n easy</dt>
-              <dd>$ curl -sS https://getcomposer.org/installer | php</dd>
-              <dt>Global</dt>
-              <dd style="text-wrap: none;">$ curl -sS https://getcomposer.org/installer | php -- --install-dir=bin</dd>
-            </dl>
+            <pre><code class="no-highlight">
+# Quick-n-easy:
+$ curl -sS https://getcomposer.org/installer | php
+
+# Global
+$ curl -sS https://getcomposer.org/installer | php -- --install-dir=bin
+</code></pre>
           </section>
           <section fullscreen-img="assets/yes.jpg" class="fullscreen">
             <h2>Run Composer</h2>
-            <p>$ composer.phar --version</p>
-            <code>Composer version d498e7</code>
+            <pre><code class="no-highlight">
+$ composer.phar --version
+Composer version d498e7
+</code></pre>
           </section>
           <section fullscreen-img="assets/yes.jpg" class="fullscreen">
             <h2>Setup</h2>
             <pre><code class="no-highlight">
 -rw-rw-r-- composer.json (your composer file)
 drwxrwxr-x src/          (your code)
-drwxrwxr-x www/          (your code)
 -rw-rw-r-- index.php     (your front controller)
 </code></pre>
           </section>
@@ -397,7 +399,7 @@ $ composer.phar install --no-dev --prefer-dist --optimize-autoloader
             <h2>ApiProblem</h2>
             <ul>
               <li>Simple utility library</li>
-              <li><a href="">IETF draft spec</a></li>
+              <li><a href="http://tools.ietf.org/html/draft-nottingham-http-problem-03">IETF draft spec</a></li>
               <li><a href="http://www.github.com/Crell/ApiProblem">GitHub</a></li>
             </ul>
           </section>
