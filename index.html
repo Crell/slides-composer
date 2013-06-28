@@ -2,9 +2,23 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Composer: There's a Module (or Library) for That</title>
+    <title>Composer: Share all the things!</title>
     <link rel="stylesheet" href="components/require.css">
     <link rel="stylesheet" href="components/revealjs/css/theme/default.css">
+    <style>
+      dl {
+        text-align: left;
+      }
+      dl dd {
+        text-indent: 2em;
+      }
+      code {
+        width: 100%;
+      }
+      span.highlight {
+        color: #00B0E8;
+      }
+    </style>
   </head>
   <body>
     <div class="reveal">
@@ -38,9 +52,10 @@
             <h2>PHP sucks at sharing</h2>
             <ul>
               <li class="fragment">How do I get a 3rd party library?</li>
+              <li class="fragment">Where do I put the files?</li>
               <li class="fragment">How do I load its code?</li>
               <li class="fragment">Does it depend on anything?</li>
-              <li class="fragment">Where do I put the files?</li>
+              <li class="fragment">Does it go in my repo or not?</li>
             </ul>
           </section>
           <section>
@@ -67,8 +82,8 @@
             <p class="fragment roll-in" style="text-align: right">(... and pray)</p>
           </section>
           <section>
-            <h3>"Do it manually and pray"<br />is for losers</h3>
-            <h4 class="fragment roll-in" style="font-style: italic;">We're better than that, right?</h4>
+            <p>"Do it manually and pray" is for losers</p>
+            <p class="fragment roll-in" style="margin-top: 1em; font-style: italic;">We're better than that, right?</p>
           </section>
         </section>
         <section>
@@ -196,17 +211,43 @@
             <p>JavaScript, stylesheet, and image asset management</p>
             <p><a href="https://github.com/kriswallsmith/assetic">http://github.com/kriswallsmith/assetic</a></p>
           </section>
+          <section fullscreen-img="assets/libraries.jpg" class="fullscreen">
+            <h2>And 10,000 others</h2>
+          </section>
         </section>
         <section>
           <section fullscreen-img="assets/yes.jpg" class="fullscreen">
             <h2>Let's Do This</h2>
           </section>
           <section fullscreen-img="assets/yes.jpg" class="fullscreen">
+            <h2>Get Composer</h2>
+            <dl>
+              <dt>Quick 'n easy</dt>
+              <dd>$ curl -sS https://getcomposer.org/installer | php</dd>
+              <dt>Global</dt>
+              <dd style="text-wrap: none;">$ curl -sS https://getcomposer.org/installer | php -- --install-dir=bin</dd>
+            </dl>
+          </section>
+          <section fullscreen-img="assets/yes.jpg" class="fullscreen">
+            <h2>Run Composer</h2>
+            <p>$ composer.phar --version</p>
+            <code>Composer version d498e7</code>
+          </section>
+          <section fullscreen-img="assets/yes.jpg" class="fullscreen">
+            <h2>Setup</h2>
+            <pre><code class="no-highlight">
+-rw-rw-r-- composer.json (your composer file)
+drwxrwxr-x src/          (your code)
+drwxrwxr-x www/          (your code)
+-rw-rw-r-- index.php     (your front controller)
+</code></pre>
+          </section>
+          <section fullscreen-img="assets/yes.jpg" class="fullscreen">
             <h2>composer.json</h2>
             <p>Base manifest file for your project</p>
-            <pre><code class="json" contenteditable>{
-    "name": "crell/mypackage",
-    "description": "This package provides some awesomeness.",
+            <pre><code class="json">{
+    "name": "crell/myapp",
+    "description": "This app is amazing.",
     "require": {
         "guzzle/guzzle": "3.4.*"
     },
@@ -219,30 +260,45 @@
           </section>
           <section fullscreen-img="assets/yes.jpg" class="fullscreen">
             <h2>composer install</h2>
-            <p>Installs all dependencies for your project</p><pre><code class="no-highlight" contenteditable>
-$ curl -sS https://getcomposer.org/installer | php
-All settings correct for using Composer
-Downloading...
+            <p>Installs all dependencies for your project</p><pre><code class="no-highlight">
+$ composer.phar install
+Loading composer repositories with package information
+Installing dependencies (including require-dev)
+  - Installing symfony/event-dispatcher (v2.3.1)
+    Downloading: 100%
 
-Composer successfully installed to: composer.phar
-Use it: php composer.phar
-$ php composer.phar install
+  - Installing guzzle/guzzle (v3.4.3)
+    Downloading: 100%
 
+symfony/event-dispatcher suggests installing symfony/dependency-injection ()
+symfony/event-dispatcher suggests installing symfony/http-kernel ()
+Writing lock file
+Generating autoload files
 </code></pre>
           </section>
           <section fullscreen-img="assets/yes.jpg" class="fullscreen">
-            <h2>File system</h2>
-            <pre><code class="no-highlight" contenteditable>
+            <h2>And now</h2>
+            <pre><code class="no-highlight">
 -rw-rw-r-- composer.json (your composer file)
--rw-rw-r-- composer.lock (generated)
+<span class="highlight">-rw-rw-r-- composer.lock (generated)</span>
 drwxrwxr-x src/          (your code)
+-rw-rw-r-- index.php     (your front controller)
+<span class="highlight">drwxrwxr-x vendor/       (everyone else's code)</span>
+</code></pre>
+          </section>
+          <section fullscreen-img="assets/yes.jpg" class="fullscreen">
+            <h2>Only put these in Git</h2>
+            <pre><code class="no-highlight">
+<span class="highlight">-rw-rw-r-- composer.json (your composer file)</span>
+<span class="highlight">-rw-rw-r-- composer.lock (generated)</span>
+<span class="highlight">drwxrwxr-x src/          (your code)</span>
+<span class="highlight">-rw-rw-r-- index.php     (your front controller)</span>
 drwxrwxr-x vendor/       (everyone else's code)
 </code></pre>
           </section>
           <section fullscreen-img="assets/yes.jpg" class="fullscreen">
             <h2>index.php</h2>
-            <pre><code class="php" contenteditable>
-require_once __DIR__ . '/vendor/autoload.php';
+            <pre><code class="php">require_once __DIR__ . '/vendor/autoload.php';
 
 // Every class is now yours to command!
 
@@ -254,34 +310,161 @@ echo $response->getBody();
 </code></pre>
           </section>
           <section fullscreen-img="assets/yes.jpg" class="fullscreen">
+            <h2>composer.lock</h2>
+            <p>Your exact dependency commits.</p>
+          </section>
+          <section fullscreen-img="assets/yes.jpg" class="fullscreen">
             <h2>composer update</h3>
-            <p>Updates all installed dependencies to the latest version</p><pre><code class="no-highlight" contenteditable>
+            <p>Updates all dependencies to the latest version</p>
+            <pre><code class="no-highlight">
 $ php composer.phar update
 Loading composer repositories with package information
 Updating dependencies
 </code></pre>
           </section>
-          <section class="json fullscreen" fullscreen-img="assets/yes.jpg">
-            <h2>More Schema Options</h2>
-            <p><a href="http://getcomposer.org/doc/04-schema.md">Schema Documentation</a></p>
-                        <pre><code class="json" contenteditable>{
-    "license": "MIT",
+          <section fullscreen-img="assets/yes.jpg" class="fullscreen">
+            <h2>What to use?</h2>
+            <div style="float: left; width: 49%; text-align: left;">
+              <h3>install</h3>
+              <p>composer.lock? <br />&nbsp;&nbsp;=> Use it<p>
+              <p>No? <br />&nbsp;&nbsp;=> Use composer.install</p>
+            </div>
+            <div style="float: right; width: 49%; text-align: left;">
+              <h3>update</h3>
+              <p>Use composer.install</p>
+              <p>Generate a new composer.lock</p>
+            </div>
+          </section>
+          <section fullscreen-img="assets/yes.jpg" class="fullscreen">
+            <h2>Versioning</h2>
+            <pre><code class="json">{
     "require": {
+        "guzzle/guzzle": "3.4.*",
+        "nocarrier/hal": ">=0.9, <=1.0",
+        "pimple/pimple": "~1.0",
+        "monolog/monolog": "dev-master#2eb0c097",
+        "easyrdf/easyrdf": "0.8.*@3ebb7d",
         "php": ">=5.3.10",
-        "guzzle/guzzle": "3.4.*"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "3.7.*"
-    },
-    "suggest": {
-        "monolog/monolog": "Advanced logging package"
+        "ext-pdo": "*"
     }
 }</code></pre>
           </section>
-          <section class="fullscreen" fullscreen-img="assets/yes.jpg">
+          <section class="json fullscreen" fullscreen-img="assets/yes.jpg">
+            <h2>More Schema Options</h2>
+            <p><a href="http://getcomposer.org/doc/04-schema.md">Schema Documentation</a></p>
+            <pre><code class="json">{
+    "license": "MIT",
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*@dev"
+    },
+    "suggest": {
+        "monolog/monolog": "Advanced logging package"
+    },
+    "config": {
+        "vendor-dir": "core/vendor",
+        "preferred-install": "dist"
+    },
+    "minimum-stability": "stable"
+}</code></pre>
+          </section>
+          <section class="json fullscreen" fullscreen-img="assets/yes.jpg">
+            <h2>Autoloading</h2>
+            <pre><code class="json">{
+    "autoload": {
+        "psr-0": {
+            "Drupal\\Core\\": "core/lib/",
+        },
+
+        "classmap": ["src/", "legacy/", "Pimple.php"],
+
+        "files": ["src/utility_functions.php"]
+    }
+}</code></pre>
+          </section>
+          <section class="json fullscreen" fullscreen-img="assets/yes.jpg">
+            <h2>Production</h2>
+            <pre><code class="no-highlight">
+$ composer.phar install --no-dev --prefer-dist --optimize-autoloader
+</code></pre>
+            <p></p>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1>Your turn</h1>
+          </section>
+          <section>
+            <h2>ApiProblem</h2>
+            <ul>
+              <li>Simple utility library</li>
+              <li><a href="">IETF draft spec</a></li>
+              <li><a href="http://www.github.com/Crell/ApiProblem">GitHub</a></li>
+            </ul>
+          </section>
+          <section>
+            <h2>ApiProblem</h2>
+            <pre><code class="no-highlight">
+-rw-rw-r-- composer.json
+-rw-rw-r-- LICENSE
+-rw-rw-r-- phpunit.xml.dist
+-rw-rw-r-- README.md
+drwxrwxr-x src
+drwxrwxr-x tests
+</code></pre>
+          </section>
+          <section>
+            <h2>composer.json</h2>
+            <pre><code class="json">{
+    "name": "crell/api-problem",
+    "description": "PHP wrapper for the api-problem IETF specification",
+    "license": "MIT",
+    "keywords": ["api-problem", "rest", "http", "json", "xml"],
+    "homepage": "https://github.com/Crell/ApiProblem",
+    "authors": [{
+            "name": "Larry Garfield",
+            "email": "larry@garfieldtech.com",
+            "homepage": "http://www.garfieldtech.com/"
+     }],
+    "autoload": {
+        "psr-0": {"Crell\\ApiProblem": "src/"}
+    },
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    }
+}</code></pre>
+          </section>
+          <section>
+            <h2>On GitHub</h2>
+            <img src="assets/api-problem-github.png" alt="ApiProblem is on GitHub." />
+          </section>
+          <section>
+            <h2>Packagist.org</h2>
+            <img src="assets/crell-packagist.png" alt="ApiProblem is on Packagist." />
+          </section>
+          <section>
+            <h2>GitHub-Packagist</h2>
+            <img src="assets/api-problem-github-config.png" alt="Packagist is on GitHub." />
+          </section>
+          <section>
+            <h2>GitHub-Packagist</h2>
+            <img src="assets/api-problem-packagist.png" alt="ApiProblem is on Packagist." />
+          </section>
+          <section>
+            <h2>In your code</h2>
+             <pre><code class="json">{
+    "require": {
+
+        "crell/api-problem": "1.0-beta1"
+    }
+}</code></pre>
+          </section>
+          <section>
             <h2>Private Repositories</h2>
             <p><em>Satis</em> allows you to host your own Composer repositories</p>
-                        <pre><code class="json" contenteditable>{
+                        <pre><code class="json">{
   "repositories": [
     {
       "type": "composer",
@@ -298,13 +481,17 @@ Updating dependencies
           </section>
         </section>
         <section>
+          <p>"Do it manually and pray" is for losers</p>
+          <p class="fragment roll-in" style="margin-top: 1em; font-style: italic;">With Composer, you can do better than that.</p>
+        </section>
+        <section>
           <h2>Stalk me!</h2>
           <p><a href="http://www.palantir.net/">http://www.palantir.net/</a></p>
           <p><a href="http://www.garfieldtech.com/">http://www.garfieldtech.com/</a></p>
           <p><a href="http://twitter.com/Crell">@Crell</a></p>
 
           <h3 style="margin-top: 1em;">Review this session</h3>
-          <p><a href="https://joind.in/talk/view/8690">Review</a></p>
+          <p><a href="https://joind.in/talk/view/8690">https://joind.in/talk/view/8690</a></p>
 
           <h3 style="margin-top: 1em;">Thanks!</h3>
         </section>
